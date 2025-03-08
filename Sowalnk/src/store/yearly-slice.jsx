@@ -4,9 +4,7 @@ import { calculateMonthlyProgress } from "../utils/calculateMonthlyProgress.jsx"
 export const fetchYearlyTasks = createAsyncThunk(
   "yearlytask/fetchYearlyTasks",
   async () => {
-    const response = await fetch("/api/v1/yearlytask/yearly", {
-      credentials: "include",
-    });
+    const response = await fetch("/api/v1/yearlytask/yearly", {});
     return await response.json();
   }
 );
@@ -16,7 +14,6 @@ export const addYearlyTask = createAsyncThunk(
   async (task) => {
     const response = await fetch("/api/v1/yearlytask/yearly", {
       method: "POST",
-      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(task),
     });
@@ -29,7 +26,6 @@ export const toggleYearlyTaskCompletion = createAsyncThunk(
   async (taskId) => {
     const response = await fetch(`/api/v1/yearlytask/yearly/${taskId}/toggle`, {
       method: "PATCH",
-      credentials: "include",
     });
     return await response.json();
   }
@@ -40,7 +36,6 @@ export const deleteYearlyTask = createAsyncThunk(
   async (taskId) => {
     await fetch(`/api/v1/yearlytask/yearly/${taskId}/delete`, {
       method: "DELETE",
-      credentials: "include",
     });
     return taskId;
   }

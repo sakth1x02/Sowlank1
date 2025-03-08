@@ -18,7 +18,6 @@ const ForgotPasswordPage = () => {
       isLoading = true;
       const response = await fetch("/api/v1/user/forgot-password", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

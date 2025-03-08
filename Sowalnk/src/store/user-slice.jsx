@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
-  const response = await fetch("/api/v1/user/users", {
-    credentials: "include",
-  });
+  const response = await fetch("/api/v1/user/users", {});
   const res = await response.json();
   return res.data;
 });
@@ -14,7 +12,6 @@ export const updatePoints = createAsyncThunk(
     try {
       const response = await fetch("/api/v1/user/update-points", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -36,7 +33,6 @@ export const increaseNormalCoins = createAsyncThunk(
     try {
       const response = await fetch("/api/v1/user/increase-normal-coins", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -58,7 +54,6 @@ export const increaseGoldCoins = createAsyncThunk(
     try {
       const response = await fetch("/api/v1/user/increase-gold-coins", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -79,7 +74,6 @@ export const increaseEliteCoins = createAsyncThunk(
     try {
       const response = await fetch("/api/v1/user/increase-elite-coins", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -101,7 +95,6 @@ export const convertNormalCoinsToCoupon = createAsyncThunk(
     try {
       const response = await fetch("/api/v1/user/convert-normal-coins", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -124,7 +117,6 @@ export const convertGoldCoinsToCoupon = createAsyncThunk(
     try {
       const response = await fetch("/api/v1/user/convert-gold-coins", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -146,7 +138,6 @@ export const convertEliteCoinsToCoupon = createAsyncThunk(
     try {
       const response = await fetch("/api/v1/user/convert-elite-coins", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

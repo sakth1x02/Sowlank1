@@ -47,7 +47,6 @@ const VerifyEmailPage = () => {
 
       const response = await fetch("/api/v1/user/verify-email", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

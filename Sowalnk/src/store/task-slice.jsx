@@ -2,16 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { calculateProgress } from "../utils/calculateProgress";
 // Async actions
 export const fetchTasks = createAsyncThunk("task/fetchTasks", async () => {
-  const response = await fetch("/api/v1/task/daily", {
-    credentials: "include",
-  });
+  const response = await fetch("/api/v1/task/daily", {});
   return await response.json();
 });
 
 export const addTask = createAsyncThunk("task/addTask", async (task) => {
   const response = await fetch("/api/v1/task/daily", {
     method: "POST",
-    credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(task),
   });
@@ -23,7 +20,6 @@ export const toggleTaskCompletion = createAsyncThunk(
   async (taskId) => {
     const response = await fetch(`/api/v1/task/daily/${taskId}/toggle`, {
       method: "PATCH",
-      credentials: "include",
     });
     return await response.json();
   }
@@ -37,7 +33,6 @@ export const toggleHasExceededTime = createAsyncThunk(
         `/api/v1/task/daily/${taskId}/togglehasexceededtime`,
         {
           method: "PATCH",
-          credentials: "include",
           headers: { "Content-Type": "application/json" },
         }
       );
@@ -55,7 +50,6 @@ export const deleteTask = createAsyncThunk(
   async (taskId) => {
     await fetch(`/api/v1/task/daily/${taskId}/delete`, {
       method: "DELETE",
-      credentials: "include",
     });
     return taskId;
   }

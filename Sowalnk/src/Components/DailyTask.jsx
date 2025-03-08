@@ -96,7 +96,6 @@ function DailyTask() {
     try {
       const response = await fetch(`/api/v1/task/daily/${taskId}/upload`, {
         method: "POST",
-        credentials: "include",
         body: formData,
       });
 

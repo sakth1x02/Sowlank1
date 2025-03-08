@@ -1,0 +1,28 @@
+/* General Layout Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Sidebar Styling */
+  .sidebar {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .sidebar.hidden {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.md:block {
+    transform: translateX(0);
+  }
+  
+  /* Content Area */
+  .main-content {
+    transition: margin-left 0.3s ease-in-out;
+  }
+  
+  .main-content.md\:ml-64 {
+    margin-left: 16rem; /* Matches the sidebar width */
+  }
+  

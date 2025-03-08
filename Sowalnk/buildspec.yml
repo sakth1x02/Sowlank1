@@ -1,0 +1,22 @@
+version: 0.2
+
+env:
+  variables:
+    VITE_RAZORPAY_KEY_ID: "rzp_test_ENQwSlEzdyS4QG"
+    VITE_RAZORPAY_KEY_SECRET: "LCdaB1ImcaeS8zWnmWKqFdL7"
+
+phases:
+  install:
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+
+  build:
+    commands:
+      - echo "Building the React app..."
+      - npm run build
+
+artifacts:
+  files:
+    - dist/**/*
+  discard-paths: no

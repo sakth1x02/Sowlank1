@@ -1,0 +1,31 @@
+version: 0.2
+
+env:
+  variables: PORT=1000
+    MONGODB_URL=mongodb+srv://aakashRao:YADAVboy321$@cluster0.3igcn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+    CORS_ORIGIN=http://localhost:5173
+    DATABASE_NAME=sowalnkdatabase
+    CLOUDINARY_NAME=dazctict8
+    CLOUDINARY_API_KEY=844179513943566
+    CLOUDINARY_API_SECRET=7oXRDRU7P39WQcweC0tzhpvQrk8
+    JWT_SECRET=sdjfwelkjcxvlk98iuKK
+    RAZORPAY_KEY_ID=rzp_test_ENQwSlEzdyS4QG
+    RAZORPAY_KEY_SECRET=LCdaB1ImcaeS8zWnmWKqFdL7
+    MAILTRAP_TOKEN=c0ffc49f75d8cd7826336f3de4c3a290
+    MAILTRAP_ENDPOINT=https://send.api.mailtrap.io/
+    NODE_ENV=production
+
+phases:
+  install:
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+
+  build:
+    commands:
+      - echo "Building the backend..."
+
+artifacts:
+  files:
+    - sowalnkBackend/**/*
+  discard-paths: no

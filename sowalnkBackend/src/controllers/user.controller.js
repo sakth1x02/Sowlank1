@@ -22,7 +22,7 @@ const generateAccessToken = (userId) => {
 // Update cookie options
 const cookieOptions = {
   httpOnly: true,
-  secure: false, // Only use secure in production
+  secure: false,
   sameSite: "strict",
   maxAge: 24 * 60 * 60 * 1000, // 1 day
 };

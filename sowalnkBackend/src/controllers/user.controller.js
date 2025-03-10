@@ -23,7 +23,7 @@ const generateAccessToken = (userId) => {
 const cookieOptions = {
   httpOnly: true,
   secure: false,
-  sameSite: "strict",
+  sameSite: "none",
   maxAge: 24 * 60 * 60 * 1000, // 1 day
 };
 
@@ -164,7 +164,7 @@ const userAuthentication = {
     await sendWelcomeEmail(user.email, user.name);
 
     // Return token and user data
-    res.cookie("token", token, cookieOptions);
+    res.cookie("token", token);
     res.status(200).json({
       success: true,
       message: "Google authentication successful",

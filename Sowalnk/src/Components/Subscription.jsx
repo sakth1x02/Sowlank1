@@ -11,6 +11,9 @@ const Subscription = () => {
     (state) => state.ui
   );
 
+  const [remainingIntermediateDays, setRemainingIntermediateDays] = useState(0);
+  const [remainingAdvancedDays, setRemainingAdvancedDays] = useState(0);
+
   // Load Razorpay script
   useEffect(() => {
     const script = document.createElement("script");
@@ -29,11 +32,26 @@ const Subscription = () => {
           },
         });
         const data = await response.json();
+        dispatch(setIntermediateMember(false));
+        dispatch(setAdvanceMember(false));
+        setRemainingIntermediateDays(0);
+        setRemainingAdvancedDays(0);
 
         data.data.subscription.forEach((plan) => {
-          if (plan.planType === "INTERMEDIATE") {
+          const isActive = new Date(plan.endDate) >= new Date();
+          if (plan.planType === "INTERMEDIATE" && isActive) {
+            const timeDifference = new Date(plan.endDate) - new Date();
+            const remainingDays = Math.ceil(
+              timeDifference / (1000 * 60 * 60 * 24)
+            );
+            setRemainingIntermediateDays(remainingDays);
             dispatch(setIntermediateMember(true));
-          } else if (plan.planType === "ADVANCED") {
+          } else if (plan.planType === "ADVANCED" && isActive) {
+            const timeDifference = new Date(plan.endDate) - new Date();
+            const remainingDays = Math.ceil(
+              timeDifference / (1000 * 60 * 60 * 24)
+            );
+            setRemainingAdvancedDays(remainingDays);
             dispatch(setAdvanceMember(true));
           }
         });
@@ -201,6 +219,16 @@ const Subscription = () => {
           <h2 className="text-2xl font-semibold mb-4">
             Features of {selectedPlan} Plan
           </h2>
+          {selectedPlan === "INTERMEDIATE" && (
+            <span className="text-purple-700 text-bold text-xl ">
+              ***Active {remainingIntermediateDays} days are left***
+            </span>
+          )}
+          {selectedPlan === "ADVANCED" && (
+            <span className="text-purple-700 text-bold text-xl ">
+              ***Active {remainingAdvancedDays} days are left***
+            </span>
+          )}
           <ul className="list-disc list-inside text-lg text-gray-700">
             {plans
               .find((plan) => plan.name === selectedPlan)

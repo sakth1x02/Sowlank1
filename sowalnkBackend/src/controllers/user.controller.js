@@ -22,7 +22,7 @@ const generateAccessToken = (userId) => {
 // Update cookie options
 const cookieOptions = {
   httpOnly: true,
-  secure: false,
+  secure: true,
   sameSite: "none",
   maxAge: 24 * 60 * 60 * 1000, // 1 day
 };
@@ -137,6 +137,12 @@ const userAuthentication = {
   // Add to userAuthentication object in user.controller.js
   googleAuth: asyncHandler(async (req, res) => {
     const { email, name } = req.body;
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email are required for Google authentication.",
+      });
+    }
 
     // Check for existing user
     let user = await User.findOne({ email });
@@ -164,7 +170,7 @@ const userAuthentication = {
     await sendWelcomeEmail(user.email, user.name);
 
     // Return token and user data
-    res.cookie("token", token);
+    res.cookie("token", token, cookieOptions);
     res.status(200).json({
       success: true,
       message: "Google authentication successful",

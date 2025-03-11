@@ -111,6 +111,7 @@ const getSubscriptionStatus = asyncHandler(async (req, res) => {
   const subscription = await Subscription.find({
     userId: req.user._id,
     status: "active",
+    endDate: { $gt: new Date() },
   });
 
   return res.status(200).json({

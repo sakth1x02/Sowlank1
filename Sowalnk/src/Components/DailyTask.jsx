@@ -277,12 +277,9 @@ function DailyTask() {
   }, [todaysTasks, navigate]);
 
   return (
-    <div className="min-h-screen lg:p-6 ">
-      <div className="max-w-md md:max-w-2xl lg:mx-auto flex flex-col lg:flex-row lg:space-x-4 mb-6">
-        <div
-          className="w-full rounded-lg shadow-lg p-5 mb-4 lg:mb-0"
-          style={{ backgroundColor: "#F0C1E1" }}
-        >
+    <div className="min-h-screen ">
+      <div className="max-w-md md:max-w-[90%]  md:mx-auto lg:mx-auto flex flex-col lg:flex-row lg:space-x-4 mb-6">
+        <div className="w-full rounded-lg shadow-lg p-5 mb-4 lg:mb-0 bg-[#F0C1E1]">
           <div className="flex items-center justify-between">
             <h1
               className="text-2xl font-semibold text-left mb-6"
@@ -368,10 +365,10 @@ function DailyTask() {
       </div>
 
       <div
-        className="max-w-md md:max-w-2xl lg:mx-auto mb-6 p-6 rounded-lg"
+        className="max-w-md md:max-w-[90%] md:mx-auto lg:mx-auto mb-6 p-6 rounded-lg"
         style={{ backgroundColor: "#F0C1E1" }}
       >
-        <div className="flex gap-6 justify-between items-start">
+        <div className=" flex gap-6 justify-between items-start">
           <h2
             className="text-2xl font-semibold text-left"
             style={{ color: "#2e2e2e" }}
@@ -529,7 +526,7 @@ function DailyTask() {
         </div>
       </div>
       <div
-        className="max-w-4xl mx-auto mb-6"
+        className="max-w-md md:max-w-[90%] md:mx-auto lg:mx-auto mb-6"
         style={{ backgroundColor: "#F0C1E1" }}
       >
         <Dashboard tasks={filteredTasks} />

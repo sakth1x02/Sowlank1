@@ -1,0 +1,51 @@
+sudo cat /var/lib/cloud/instance/user-data.txt
+#!/bin/bash
+# Update package list and install required packages
+sudo yum update -y
+sudo yum install -y git
+
+# Install Node.js (use NodeSource for the latest version)
+curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
+sudo yum install -y nodejs
+
+# Install NGINX
+sudo yum install -y nginx
+
+# Start and enable NGINX
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+# Define variables
+REPO_URL="https://github.com/sakth1x02/Sowlank1.git"
+BRANCH_NAME="main"
+REPO_DIR="/home/ec2-user/Sowlank1/Sowalnk"
+ENV_FILE="$REPO_DIR/.env"
+APP_TIER_ALB_URL="http://18.209.27.83:2000/"  # Replace with your actual ALB endpoint
+
+# Clone the repository as ec2-user
+cd /home/ec2-user
+sudo -u ec2-user git clone $REPO_URL
+cd Sowlank1
+
+# Checkout to the specific branch
+sudo -u ec2-user git checkout $BRANCH_NAME
+
+# Ensure ec2-user owns the directory
+sudo chown -R ec2-user:ec2-user /home/ec2-user/Sowlank1
+
+# Create .env file with the API_URL
+echo "VITE_API_URL=\"$API_URL\"" | sudo tee "$ENV_FILE" > /dev/null
+
+# Install Node.js dependencies as ec2-user
+cd $REPO_DIR
+sudo -u ec2-user npm install
+
+# Build the frontend application as ec2-user
+sudo -u ec2-user npm run build
+
+sudo -u ec2-user npm run dev -- --host
+
+
+
+# Restart NGINX to apply the new configuration
+sudo systemctl restart nginx

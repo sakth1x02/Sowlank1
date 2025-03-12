@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
-  const response = await fetch("/api/v1/user/users", {});
+  const response = await fetch("/api/v1/user/users", {
+    credentials: "include",
+  });
   const res = await response.json();
   return res.data;
 });
@@ -16,6 +18,7 @@ export const updatePoints = createAsyncThunk(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId, completed, taskId }),
+        credentials: "include",
       });
 
       if (response.ok) {
@@ -37,6 +40,7 @@ export const increaseNormalCoins = createAsyncThunk(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId, taskId }),
+        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();
@@ -58,6 +62,7 @@ export const increaseGoldCoins = createAsyncThunk(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId, taskId }),
+        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();
@@ -78,6 +83,7 @@ export const increaseEliteCoins = createAsyncThunk(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId, taskId }),
+        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();
@@ -99,6 +105,7 @@ export const convertNormalCoinsToCoupon = createAsyncThunk(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId }),
+        credentials: "include",
       });
 
       if (response.ok) {
@@ -121,6 +128,7 @@ export const convertGoldCoinsToCoupon = createAsyncThunk(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId }),
+        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();
@@ -142,6 +150,7 @@ export const convertEliteCoinsToCoupon = createAsyncThunk(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ userId }),
+        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();

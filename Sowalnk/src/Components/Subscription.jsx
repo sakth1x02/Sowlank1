@@ -32,10 +32,10 @@ const Subscription = () => {
           throw new Error("Authentication required. Please login.");
         }
         const response = await fetch("/api/v1/subscription/status", {
-          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          credentials: "include",
         });
         const data = await response.json();
         dispatch(setIntermediateMember(false));
@@ -121,12 +121,12 @@ const Subscription = () => {
       // Create subscription
       const response = await fetch("/api/v1/subscription/create", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ planType: planName }),
+        credentials: "include",
       });
 
       const data = await response.json();
@@ -152,7 +152,6 @@ const Subscription = () => {
             }
             const verifyResponse = await fetch("/api/v1/subscription/verify", {
               method: "POST",
-              credentials: "include",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
@@ -162,6 +161,7 @@ const Subscription = () => {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_signature: response.razorpay_signature,
               }),
+              credentials: "include",
             });
 
             const verifyData = await verifyResponse.json();

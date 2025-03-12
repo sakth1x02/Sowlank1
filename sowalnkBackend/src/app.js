@@ -5,7 +5,11 @@ import cookieParser from "cookie-parser";
 const app = express();
 app.use(
   cors({
-    origin: ["https://sakthidev.site", "https://3-tier-540623662.us-east-2.elb.amazonaws.com/"],
+    origin: [
+      "https://sakthidev.site",
+      "http://localhost:5173",
+      "https://3-tier-540623662.us-east-2.elb.amazonaws.com",
+    ],
     credentials: true,
   })
 );

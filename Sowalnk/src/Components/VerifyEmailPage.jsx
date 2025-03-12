@@ -51,6 +51,7 @@ const VerifyEmailPage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ verificationCode }),
+        credentials: "include",
       });
 
       const data = await response.json();

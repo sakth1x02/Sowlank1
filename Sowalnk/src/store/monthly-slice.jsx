@@ -18,6 +18,7 @@ export const addMonthlyTask = createAsyncThunk(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(task),
+      credentials: "include",
     });
     return await response.json();
   }
@@ -30,6 +31,7 @@ export const toggleMonthlyTaskCompletion = createAsyncThunk(
       `/api/v1/monthlytask/monthly/${taskId}/toggle`,
       {
         method: "PATCH",
+        credentials: "include",
       }
     );
     return await response.json();
@@ -41,6 +43,7 @@ export const deleteMonthlyTask = createAsyncThunk(
   async (taskId) => {
     await fetch(`/api/v1/monthlytask/monthly/${taskId}/delete`, {
       method: "DELETE",
+      credentials: "include",
     });
     return taskId;
   }

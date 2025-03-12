@@ -29,7 +29,6 @@ const Login = () => {
       setLoading(true);
       const response = await fetch(`/api/v1/user/login`, {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -37,6 +36,7 @@ const Login = () => {
           email,
           password,
         }),
+        credentials: "include",
       });
 
       const data = await response.json();
@@ -72,7 +72,6 @@ const Login = () => {
       // Send to backend for token generation
       const response = await fetch(`/api/v1/user/google-auth`, {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -80,6 +79,7 @@ const Login = () => {
           email: user.email,
           name: user.displayName,
         }),
+        credentials: "include",
       });
 
       const data = await response.json();

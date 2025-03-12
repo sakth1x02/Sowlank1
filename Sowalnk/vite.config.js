@@ -5,15 +5,18 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: "0.0.0.0", // Bind to all available network interfaces
+    host: "0.0.0.0",
     port: 5173,
     strictPort: true,
-    allowedHosts: "all", // <-- Allow all hosts to connect
+    allowedHosts: [
+      "sakthidev.site",
+      "3-tier-540623662.us-east-2.elb.amazonaws.com",
+    ],
     proxy: {
       "/api": {
-        target: "https://3-tier-540623662.us-east-2.elb.amazonaws.com",
+        target: "https://3-tier-540623662.us-east-2.elb.amazonaws.com", // Added 'http://'
         changeOrigin: true,
-        secure: false, // If using HTTPS, set this to true
+        secure: false, // Keep false unless using valid HTTPS certificates
       },
     },
   },

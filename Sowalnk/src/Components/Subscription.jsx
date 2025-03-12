@@ -32,6 +32,7 @@ const Subscription = () => {
           throw new Error("Authentication required. Please login.");
         }
         const response = await fetch("/api/v1/subscription/status", {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -120,6 +121,7 @@ const Subscription = () => {
       // Create subscription
       const response = await fetch("/api/v1/subscription/create", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -150,6 +152,7 @@ const Subscription = () => {
             }
             const verifyResponse = await fetch("/api/v1/subscription/verify", {
               method: "POST",
+              credentials: "include",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,

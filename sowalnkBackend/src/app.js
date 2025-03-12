@@ -3,7 +3,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 const app = express();
-app.use(cors({ origin: ["https://sakthidev.site", "http://localhost:5173"] }));
+app.use(
+  cors({
+    origin: ["https://sakthidev.site", "https://3-tier-540623662.us-east-2.elb.amazonaws.com/"],
+    credentials: true,
+  })
+);
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kbs" }));
 app.use(express.static("public"));

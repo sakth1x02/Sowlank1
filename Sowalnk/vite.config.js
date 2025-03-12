@@ -14,10 +14,12 @@ export default defineConfig({
     ],
     proxy: {
       "/api": {
-        target: "https://3-tier-540623662.us-east-2.elb.amazonaws.com", // Added 'http://'
+        target: "https://app-alb-990835184.us-east-2.elb.amazonaws.com/", // Added 'http://'
         changeOrigin: true,
         secure: false, // Keep false unless using valid HTTPS certificates
       },
     },
   },
 });
+
+

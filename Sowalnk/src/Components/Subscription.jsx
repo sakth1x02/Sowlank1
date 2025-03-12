@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIntermediateMember, setAdvanceMember } from "../store/ui-slice";
 import { TriangleAlert } from "lucide-react";
+import { toast } from "react-toastify";
 
 const Subscription = () => {
   const [selectedPlan, setSelectedPlan] = useState();
@@ -26,6 +27,10 @@ const Subscription = () => {
     const checkSubscriptionStatus = async () => {
       try {
         const token = localStorage.getItem("token");
+        console.log("Token:", token);
+        if (!token) {
+          throw new Error("Authentication required. Please login.");
+        }
         const response = await fetch("/api/v1/subscription/status", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +66,7 @@ const Subscription = () => {
     };
 
     checkSubscriptionStatus();
-  }, [dispatch]);
+  }, [dispatch, intermediateMember, advanceMember]);
 
   const plans = [
     {
@@ -107,6 +112,11 @@ const Subscription = () => {
       setLoading(true);
       const token = localStorage.getItem("token");
 
+      // Add proper error handling for missing token
+      if (!token) {
+        throw new Error("Authentication required. Please login.");
+      }
+
       // Create subscription
       const response = await fetch("/api/v1/subscription/create", {
         method: "POST",
@@ -123,7 +133,7 @@ const Subscription = () => {
         throw new Error(data.message || "Failed to create subscription");
       }
 
-      // Initialize Razorpay
+      // Initialize Razorpay with proper configuration
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: data.data.amount,
@@ -132,8 +142,12 @@ const Subscription = () => {
         description: `${planName} Plan Subscription`,
         order_id: data.data.id,
         handler: async function (response) {
+          // Verify payment
           try {
-            // Verify payment
+            const token = localStorage.getItem("token");
+            if (!token) {
+              throw new Error("Authentication required. Please login.");
+            }
             const verifyResponse = await fetch("/api/v1/subscription/verify", {
               method: "POST",
               headers: {
@@ -155,29 +169,42 @@ const Subscription = () => {
               );
             }
 
-            // Update UI based on plan
+            // Refresh subscription status after successful payment
             if (planName === "INTERMEDIATE") {
               dispatch(setIntermediateMember(true));
             } else if (planName === "ADVANCED") {
               dispatch(setAdvanceMember(true));
             }
 
-            alert("Subscription successful!");
+            toast.success("Subscription successful!");
           } catch (error) {
-            alert("Payment verification failed: " + error.message);
+            console.error("Verification error:", error);
+            toast.error("Payment verification failed: " + error.message);
           }
         },
         prefill: {
-          email: "user@example.com", // You can get this from your user context
+          name: "User Name",
+          email: "user@example.com",
+          contact: "+911234567890",
+        },
+        notes: {
+          planType: planName,
         },
         theme: {
           color: "#7C3AED",
+        },
+        modal: {
+          ondismiss: () => {
+            console.log("Payment modal closed");
+            setLoading(false);
+          },
         },
       };
 
       const razorpayInstance = new window.Razorpay(options);
       razorpayInstance.open();
     } catch (error) {
+      console.error("Subscription error:", error);
       alert("Failed to initiate subscription: " + error.message);
     } finally {
       setLoading(false);
@@ -243,7 +270,7 @@ const Subscription = () => {
                 className="flex gap-3 cursor-pointer"
                 onClick={() => setSelectedPlan("INTERMEDIATE")}
               >
-                <TriangleAlert /> Subscribe Now{" "}
+                <TriangleAlert className="h-6 w-6" /> Subscribe Now{" "}
               </span>
             </div>
           )}

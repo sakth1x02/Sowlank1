@@ -42,14 +42,15 @@ const userSchema = new Schema(
       required: function () {
         return this.authMethod === "email";
       },
-      default: null, // Changed from ""
+      // default: null,
       unique: true,
       sparse: true,
       validate: {
         validator: function (v) {
           // Ensure phone is validated only when authMethod is "email"
           if (this.authMethod !== "email") return true;
-          return v !== null && /^\+?[1-9]\d{1,14}$/.test(v);
+          // return v !== null && /^\+?[1-9]\d{1,14}$/.test(v);
+          return /^\+?[1-9]\d{1,14}$/.test(v);
         },
         message: "Invalid phone number format",
       },

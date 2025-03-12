@@ -16,14 +16,17 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
     try {
       isLoading = true;
-      const response = await fetch("/api/v1/user/forgot-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/user/forgot-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+          credentials: "include",
+        }
+      );
       const resData = response.json();
       console.log(resData);
       setIsSubmitted(true);

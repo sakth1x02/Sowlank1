@@ -4,9 +4,12 @@ import { calculateMonthlyProgress } from "../utils/calculateMonthlyProgress.jsx"
 export const fetchYearlyTasks = createAsyncThunk(
   "yearlytask/fetchYearlyTasks",
   async () => {
-    const response = await fetch("/api/v1/yearlytask/yearly", {
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/yearlytask/yearly`,
+      {
+        credentials: "include",
+      }
+    );
     return await response.json();
   }
 );
@@ -14,12 +17,15 @@ export const fetchYearlyTasks = createAsyncThunk(
 export const addYearlyTask = createAsyncThunk(
   "yearlytask/addYearlyTask",
   async (task) => {
-    const response = await fetch("/api/v1/yearlytask/yearly", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(task),
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/yearlytask/yearly`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task),
+        credentials: "include",
+      }
+    );
     return await response.json();
   }
 );
@@ -27,10 +33,13 @@ export const addYearlyTask = createAsyncThunk(
 export const toggleYearlyTaskCompletion = createAsyncThunk(
   "yearlytask/toggleYearlyTaskCompletion",
   async (taskId) => {
-    const response = await fetch(`/api/v1/yearlytask/yearly/${taskId}/toggle`, {
-      method: "PATCH",
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/yearlytask/yearly/${taskId}/toggle`,
+      {
+        method: "PATCH",
+        credentials: "include",
+      }
+    );
     return await response.json();
   }
 );
@@ -38,10 +47,13 @@ export const toggleYearlyTaskCompletion = createAsyncThunk(
 export const deleteYearlyTask = createAsyncThunk(
   "yearlytask/deleteYearlyTask",
   async (taskId) => {
-    await fetch(`/api/v1/yearlytask/yearly/${taskId}/delete`, {
-      method: "DELETE",
-      credentials: "include",
-    });
+    await fetch(
+      `${import.meta.env.VITE_API_URL}/yearlytask/yearly/${taskId}/delete`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
     return taskId;
   }
 );

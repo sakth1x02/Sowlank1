@@ -45,14 +45,17 @@ const VerifyEmailPage = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch("/api/v1/user/verify-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ verificationCode }),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/user/verify-email`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ verificationCode }),
+          credentials: "include",
+        }
+      );
 
       const data = await response.json();
 

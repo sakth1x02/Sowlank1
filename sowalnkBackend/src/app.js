@@ -7,12 +7,15 @@ app.use(
   cors({
     origin: [
       "https://sakthidev.site",
-      "http://localhost:5173",
       "https://3-tier-540623662.us-east-2.elb.amazonaws.com",
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["set-cookie"],
   })
 );
+
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kbs" }));
 app.use(express.static("public"));

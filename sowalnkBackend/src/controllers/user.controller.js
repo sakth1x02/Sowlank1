@@ -149,13 +149,9 @@ const userAuthentication = {
 
     // Create new user if not exists
     if (!user) {
-      // const tempPassword = crypto.randomBytes(10).toString("hex"); // Generate random password
-      // const hashedPassword = await bcrypt.hash(tempPassword, 10);
-
       user = await User.create({
         name,
         email,
-        // password: hashedPassword,
         isVerified: true, // Skip email verification for Google users
         authMethod: "google", // Add this field to track auth method
       });

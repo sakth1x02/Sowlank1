@@ -30,12 +30,15 @@ const Subscription = () => {
         if (!token) {
           throw new Error("Authentication required. Please login.");
         }
-        const response = await fetch(`/api/v1/subscription/status`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          `https://app-alb-990835184.us-east-2.elb.amazonaws.com/api/v1/subscription/status`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            credentials: "include",
+          }
+        );
         const data = await response.json();
         dispatch(setIntermediateMember(false));
         dispatch(setAdvanceMember(false));

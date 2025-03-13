@@ -4,12 +4,9 @@ import { calculateMonthlyProgress } from "../utils/calculateMonthlyProgress.jsx"
 export const fetchMonthlyTasks = createAsyncThunk(
   "weeklytask/fetchMonthlyTasks",
   async () => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/monthlytask/monthly`,
-      {
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`/api/v1/monthlytask/monthly`, {
+      credentials: "include",
+    });
     return await response.json();
   }
 );
@@ -17,15 +14,12 @@ export const fetchMonthlyTasks = createAsyncThunk(
 export const addMonthlyTask = createAsyncThunk(
   "monthlytask/addMonthlyTask",
   async (task) => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/monthlytask/monthly`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(task),
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`/api/v1/monthlytask/monthly`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task),
+      credentials: "include",
+    });
     return await response.json();
   }
 );
@@ -34,7 +28,7 @@ export const toggleMonthlyTaskCompletion = createAsyncThunk(
   "monthlytask/toggleMonthlyTaskCompletion",
   async (taskId) => {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/monthlytask/monthly/${taskId}/toggle`,
+      `/api/v1/monthlytask/monthly/${taskId}/toggle`,
       {
         method: "PATCH",
         credentials: "include",
@@ -47,13 +41,10 @@ export const toggleMonthlyTaskCompletion = createAsyncThunk(
 export const deleteMonthlyTask = createAsyncThunk(
   "monthlytask/deleteMonthlyTask",
   async (taskId) => {
-    await fetch(
-      `${import.meta.env.VITE_API_URL}/monthlytask/monthly/${taskId}/delete`,
-      {
-        method: "DELETE",
-        credentials: "include",
-      }
-    );
+    await fetch(`/api/v1/monthlytask/monthly/${taskId}/delete`, {
+      method: "DELETE",
+      credentials: "include",
+    });
     return taskId;
   }
 );

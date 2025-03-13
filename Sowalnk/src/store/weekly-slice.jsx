@@ -4,12 +4,9 @@ import { calculateWeeklyProgress } from "../utils/calculateWeeklyProgress";
 export const fetchWeeklyTasks = createAsyncThunk(
   "weeklytask/fetchWeeklyTasks",
   async () => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/weeklytask/weekly`,
-      {
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`/api/v1/weeklytask/weekly`, {
+      credentials: "include",
+    });
     return await response.json();
   }
 );
@@ -17,15 +14,12 @@ export const fetchWeeklyTasks = createAsyncThunk(
 export const addWeeklyTask = createAsyncThunk(
   "weeklytask/addWeeklyTask",
   async (task) => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/weeklytask/weekly`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(task),
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`/api/v1/weeklytask/weekly`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task),
+      credentials: "include",
+    });
     return await response.json();
   }
 );
@@ -33,13 +27,10 @@ export const addWeeklyTask = createAsyncThunk(
 export const toggleWeeklyTaskCompletion = createAsyncThunk(
   "weeklytask/toggleWeeklyTaskCompletion",
   async (taskId) => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/weeklytask/weekly/${taskId}/toggle`,
-      {
-        method: "PATCH",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`/api/v1/weeklytask/weekly/${taskId}/toggle`, {
+      method: "PATCH",
+      credentials: "include",
+    });
     return await response.json();
   }
 );
@@ -47,13 +38,10 @@ export const toggleWeeklyTaskCompletion = createAsyncThunk(
 export const deleteWeeklyTask = createAsyncThunk(
   "weeklytask/deleteWeeklyTask",
   async (taskId) => {
-    await fetch(
-      `${import.meta.env.VITE_API_URL}/weeklytask/weekly/${taskId}/delete`,
-      {
-        method: "DELETE",
-        credentials: "include",
-      }
-    );
+    await fetch(`/api/v1/weeklytask/weekly/${taskId}/delete`, {
+      method: "DELETE",
+      credentials: "include",
+    });
     return taskId;
   }
 );

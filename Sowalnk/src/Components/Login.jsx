@@ -69,20 +69,17 @@ const Login = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       // Send to backend for token generation
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/user/google-auth`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user.email,
-            name: user.displayName,
-          }),
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/v1/user/google-auth`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          name: user.displayName,
+        }),
+        credentials: "include",
+      });
 
       const data = await response.json();
 

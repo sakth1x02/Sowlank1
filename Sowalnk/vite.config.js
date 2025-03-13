@@ -13,12 +13,12 @@ export default defineConfig({
       "3-tier-540623662.us-east-2.elb.amazonaws.com",
       "app-alb-990835184.us-east-2.elb.amazonaws.com",
     ],
-    // proxy: {
-    //   "/api": {
-    //     target: "https://app-alb-990835184.us-east-2.elb.amazonaws.com",
-    //     changeOrigin: true,
-    //     secure: false,
-    //   },
-    // },
+    proxy: {
+      "/api": {
+        target: "https://app-alb-990835184.us-east-2.elb.amazonaws.com",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
 });

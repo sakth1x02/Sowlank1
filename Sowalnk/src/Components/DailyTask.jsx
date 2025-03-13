@@ -94,14 +94,11 @@ function DailyTask() {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/task/daily/${taskId}/upload`,
-        {
-          method: "POST",
-          body: formData,
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/v1/task/daily/${taskId}/upload`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
 
       if (response.ok) {
         const data = await response.json();

@@ -30,15 +30,12 @@ const Subscription = () => {
         if (!token) {
           throw new Error("Authentication required. Please login.");
         }
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/subscription/status`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`/api/v1/subscription/status`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        });
         const data = await response.json();
         dispatch(setIntermediateMember(false));
         dispatch(setAdvanceMember(false));
@@ -121,18 +118,15 @@ const Subscription = () => {
       }
 
       // Create subscription
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/subscription/create`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ planType: planName }),
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/v1/subscription/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ planType: planName }),
+        credentials: "include",
+      });
 
       const data = await response.json();
 
@@ -155,22 +149,19 @@ const Subscription = () => {
             if (!token) {
               throw new Error("Authentication required. Please login.");
             }
-            const verifyResponse = await fetch(
-              `${import.meta.env.VITE_API_URL}/subscription/verify`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_signature: response.razorpay_signature,
-                }),
-                credentials: "include",
-              }
-            );
+            const verifyResponse = await fetch(`/api/v1/subscription/verify`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+              }),
+              credentials: "include",
+            });
 
             const verifyData = await verifyResponse.json();
 

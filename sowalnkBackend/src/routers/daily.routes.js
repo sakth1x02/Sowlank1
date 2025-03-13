@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { dailyTaskController } from "../controllers/daily.controller.js";
 import { upload } from "../middleware/multer.middleware.js";
-// import { verifyJWT } from "../middleware/auth.middleware.js";
+import { verifyJWT } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
 // Protect all routes
-// router.use(verifyJWT);
+router.use(verifyJWT);
 
 router.post("/daily", dailyTaskController.createTask);
 router.get("/daily", dailyTaskController.getAllTasks);

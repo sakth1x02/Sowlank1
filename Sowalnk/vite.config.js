@@ -16,7 +16,7 @@ export default defineConfig({
       "/api": {
         target: "https://app-alb-990835184.us-east-2.elb.amazonaws.com",
         changeOrigin: true,
-        secure: true,
+        secure: false,
       },
     },
   },

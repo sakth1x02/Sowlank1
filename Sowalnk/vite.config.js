@@ -15,9 +15,15 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://app-alb-990835184.us-east-2.elb.amazonaws.com",
-        // target: "http://localhost:2000",
         changeOrigin: true,
         secure: false,
+        configure: (proxy, _options) => {
+          proxy.on("proxyReq", (proxyReq, req, _res) => {
+            if (req.headers.cookie) {
+              proxyReq.setHeader("Cookie", req.headers.cookie);
+            }
+          });
+        },
       },
     },
   },

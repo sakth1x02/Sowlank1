@@ -95,15 +95,7 @@ const userAuthentication = {
     const createdUser = await User.findById(user._id).select("-password");
 
     // Set cookie and send response with token
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      path: "/",
-      sameSite: "none",
-      domain: ".sakthidev.site",
-      maxAge: 24 * 60 * 60 * 1000,
-      partitioned: true,
-    });
+    res.cookie("token", token, cookieOptions);
     res.status(201).json({
       success: true,
       message: "User registered successfully",
@@ -177,15 +169,7 @@ const userAuthentication = {
     await sendWelcomeEmail(user.email, user.name);
 
     // Return token and user data
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      path: "/",
-      sameSite: "none",
-      domain: ".sakthidev.site",
-      maxAge: 24 * 60 * 60 * 1000,
-      partitioned: true,
-    });
+    res.cookie("token", token, cookieOptions);
     res.status(200).json({
       success: true,
       message: "Google authentication successful",
@@ -225,15 +209,7 @@ const userAuthentication = {
       await user.save();
 
       // Set cookie and send response with token
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        path: "/",
-        sameSite: "none",
-        domain: ".sakthidev.site",
-        maxAge: 24 * 60 * 60 * 1000,
-        partitioned: true,
-      });
+      res.cookie("token", token, cookieOptions);
       res.status(200).json({
         success: true,
         message: "User logged in successfully",

@@ -16,7 +16,6 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     if (!token) {
       throw new ApiError(401, "Unauthorized request - No token provided");
     }
-    console.log("Token from auth middleware", token);
     try {
       const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
 
@@ -27,9 +26,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
       if (!user) {
         throw new ApiError(401, "Invalid Access Token - User not found");
       }
-      console.log("User from auth middleware", user);
       req.user = user;
-      console.log("Request User from auth middleware", req.user);
       next();
     } catch (error) {
       console.error("Token verification error:", error); // Debug log

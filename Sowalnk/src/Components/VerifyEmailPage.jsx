@@ -64,8 +64,6 @@ const VerifyEmailPage = () => {
 
       setIsLoading(false);
       setError(null);
-
-      setTimeout(() => toast.success(data.message), 3000);
       navigate("/login");
     } catch (error) {
       console.error(error, "Invalid verification code");

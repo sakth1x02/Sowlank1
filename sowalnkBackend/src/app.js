@@ -3,16 +3,22 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { verifyJWT } from "./middleware/auth.middleware.js";
 const app = express();
+app.use(cookieParser());
 app.use(
   cors({
     origin: [
       "https://sakthidev.site",
-      "http://localhost:5173",
       "https://3-tier-540623662.us-east-2.elb.amazonaws.com",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Access-Control-Allow-Headers",
+      "Access-Control-Allow-Credentials",
+      "Access-Control-Allow-Origin",
+    ],
     exposedHeaders: ["set-cookie"],
   })
 );
@@ -20,7 +26,6 @@ app.use(
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kbs" }));
 app.use(express.static("public"));
-app.use(cookieParser());
 
 //Testing Routes
 app.use("/api/v1/public", (req, res) => {

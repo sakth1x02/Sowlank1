@@ -23,9 +23,11 @@ const generateAccessToken = (userId) => {
 const cookieOptions = {
   httpOnly: true,
   secure: true,
+  path: "/",
   sameSite: "none",
   domain: ".sakthidev.site",
-  maxAge: 24 * 60 * 60 * 1000, // 1 day
+  maxAge: 24 * 60 * 60 * 1000,
+  partitioned: true,
 };
 
 const userAuthentication = {
@@ -93,7 +95,15 @@ const userAuthentication = {
     const createdUser = await User.findById(user._id).select("-password");
 
     // Set cookie and send response with token
-    res.cookie("token", token, cookieOptions);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      path: "/",
+      sameSite: "none",
+      domain: ".sakthidev.site",
+      maxAge: 24 * 60 * 60 * 1000,
+      partitioned: true,
+    });
     res.status(201).json({
       success: true,
       message: "User registered successfully",
@@ -167,7 +177,15 @@ const userAuthentication = {
     await sendWelcomeEmail(user.email, user.name);
 
     // Return token and user data
-    res.cookie("token", token, cookieOptions);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      path: "/",
+      sameSite: "none",
+      domain: ".sakthidev.site",
+      maxAge: 24 * 60 * 60 * 1000,
+      partitioned: true,
+    });
     res.status(200).json({
       success: true,
       message: "Google authentication successful",
@@ -207,7 +225,15 @@ const userAuthentication = {
       await user.save();
 
       // Set cookie and send response with token
-      res.cookie("token", token, cookieOptions);
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        path: "/",
+        sameSite: "none",
+        domain: ".sakthidev.site",
+        maxAge: 24 * 60 * 60 * 1000,
+        partitioned: true,
+      });
       res.status(200).json({
         success: true,
         message: "User logged in successfully",
@@ -220,7 +246,13 @@ const userAuthentication = {
   }),
 
   logoutUser: asyncHandler(async (req, res) => {
-    res.clearCookie("token", cookieOptions);
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      path: "/",
+      sameSite: "none",
+      domain: ".sakthidev.site",
+    });
     res.status(200).json({
       success: true,
       message: "User logged out successfully",

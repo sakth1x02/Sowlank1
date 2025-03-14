@@ -401,8 +401,8 @@ function DailyTask() {
             />
           </div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full table-auto">
+        <div className="overflow-x-auto max-h-96 overflow-scroll">
+          <table className="w-full table-auto ">
             <thead>
               <tr className="bg-[#674188] text-white">
                 <th className="px-4 py-3">Task Name</th>
@@ -415,16 +415,18 @@ function DailyTask() {
                 <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-[#F0C1E1]">
+            <tbody className="bg-[#F0C1E1] ">
               {filteredTasks?.map((task, index) => (
                 <tr
                   key={index}
-                  className={`border-t ${
+                  className={`border-t overflow-scroll ${
                     task?.isCompleted ? "bg-green-100" : "bg-white"
                   }`}
                 >
-                  <td className="px-4 py-2 text-center text-black">
-                    {task?.taskName}
+                  <td className="px-4  overflow-auto  py-2 text-center text-black">
+                    <div className="w-30 h-12 overflow-auto flex justify-center items-center">
+                      {task?.taskName}
+                    </div>
                   </td>
                   <td className="px-4 py-2 text-center text-black">
                     {task?.priority}
@@ -477,7 +479,7 @@ function DailyTask() {
                     />
                   </td>
 
-                  <td className="pl-5 py-2 text-center flex gap-1">
+                  <td className="px-4 py-2 text-center">
                     {!task.proofOfWork && (
                       <input
                         name="proofwork"
@@ -486,7 +488,7 @@ function DailyTask() {
                           handleFileChange(task?._id, e.target.files[0])
                         }
                         disabled={task?.hasExceededTime}
-                        className={`text-sm ${
+                        className={`text-sm w-[90px] overflow-auto ${
                           task?.hasExceededTime ? "cursor-not-allowed" : ""
                         }`}
                         required

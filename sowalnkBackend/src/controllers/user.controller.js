@@ -24,6 +24,7 @@ const cookieOptions = {
   httpOnly: true,
   secure: true,
   sameSite: "none",
+  domain: ".sakthidev.site",
   maxAge: 24 * 60 * 60 * 1000, // 1 day
 };
 
@@ -219,7 +220,7 @@ const userAuthentication = {
   }),
 
   logoutUser: asyncHandler(async (req, res) => {
-    res.clearCookie("token");
+    res.clearCookie("token", cookieOptions);
     res.status(200).json({
       success: true,
       message: "User logged out successfully",

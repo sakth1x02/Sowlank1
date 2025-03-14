@@ -26,7 +26,7 @@ const Subscription = () => {
   useEffect(() => {
     const checkSubscriptionStatus = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = await localStorage.getItem("token");
         if (!token) {
           throw new Error("Authentication required. Please login.");
         }
@@ -110,7 +110,7 @@ const Subscription = () => {
 
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+      const token = await localStorage.getItem("token");
 
       // Add proper error handling for missing token
       if (!token) {
@@ -145,7 +145,7 @@ const Subscription = () => {
         handler: async function (response) {
           // Verify payment
           try {
-            const token = localStorage.getItem("token");
+            const token = await localStorage.getItem("token");
             if (!token) {
               throw new Error("Authentication required. Please login.");
             }
@@ -197,7 +197,6 @@ const Subscription = () => {
         },
         modal: {
           ondismiss: () => {
-            console.log("Payment modal closed");
             setLoading(false);
           },
         },

@@ -4,11 +4,11 @@ import { toast } from "react-toastify";
 import Input from "../utils/Input.jsx";
 import { ArrowLeft, Loader, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const navigate = useNavigate();
   // const { isLoading, forgotPassword } = useAuthStore();
   let isLoading = false;
 
@@ -24,9 +24,18 @@ const ForgotPasswordPage = () => {
         body: JSON.stringify({ email }),
         credentials: "include",
       });
-      const resData = response.json();
-      console.log(resData);
+      const resData = await response.json();
       setIsSubmitted(true);
+      toast.success(resData.message);
+      setTimeout(() => {
+        try {
+          window.close();
+        } catch (err) {
+          console.warn("Could not close the tab. Redirecting instead...");
+          navigate("/login");
+        }
+        window.close();
+      }, 4000);
     } catch (err) {
       console.log("Getting Error in Forgot Password", err);
       toast.error("Something went wrong in Forgot Password");

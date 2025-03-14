@@ -223,7 +223,7 @@ function YearlyTask() {
         <h2 className="text-2xl font-semibold text-left mb-6 text-[#2e2e2e]">
           Yearly Tasks
         </h2>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto max-h-96 overflow-scroll">
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-[#674188] text-white">
@@ -244,7 +244,9 @@ function YearlyTask() {
                     className={task.isCompleted ? "bg-[#E6F9E6]" : "bg-white"}
                   >
                     <td className="px-4 py-2 text-center text-black">
-                      {task.taskName}
+                      <div className="w-20 h-12 overflow-auto flex justify-start items-center">
+                        {task.taskName}
+                      </div>
                     </td>
                     <td className="px-4 py-2 text-center text-black">
                       {task.priority}
@@ -256,18 +258,17 @@ function YearlyTask() {
                       {new Date(task.endDate).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-2">
-                      <div className="relative h-5 bg-gray-200 rounded-full">
+                      <div className="relative w-full h-6 rounded-full bg-gray-300">
                         <div
-                          className="absolute top-0 left-0 h-full rounded-full transition-all duration-300"
+                          className="h-full rounded-full"
                           style={{
                             width: `${task.progress}%`,
                             backgroundColor: getProgressColor(task.progress),
                           }}
-                        >
-                          <span className="absolute inset-0 flex items-center justify-center text-xs text-white">
-                            {task.progress}%
-                          </span>
-                        </div>
+                        ></div>
+                        <span className="absolute inset-x-2 text-xs text-purple-700">
+                          {task.progress}%
+                        </span>
                       </div>
                     </td>
                     {/* <td className="px-4 py-3 text-center">

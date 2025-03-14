@@ -318,7 +318,7 @@ function WeeklyTask() {
       </div>
 
       <div className="my-6 max-w-md md:max-w-4xl lg:mx-auto rounded-lg shadow-lg p-6 bg-[#F0C1E1]">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto max-h-96 overflow-scroll">
           <table className="w-full border-collapse table-auto">
             <thead>
               <tr className="bg-[#674188] text-white">
@@ -330,10 +330,14 @@ function WeeklyTask() {
                 <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-[#F0C1E1] ">
               {weeklyTasks.map((task) => (
                 <tr key={task._id} className="border-t">
-                  <td className="px-4 py-2 text-center">{task.taskName}</td>
+                  <td className="px-4 py-2 text-center">
+                    <div className="w-20 h-12 overflow-auto flex justify-start items-center">
+                      {task.taskName}
+                    </div>
+                  </td>
                   <td className="px-4 py-2 text-center">{task.priority}</td>
                   <td className="px-4 py-2 text-center">
                     {new Date(task.startDate).toLocaleDateString()}

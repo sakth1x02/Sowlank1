@@ -19,11 +19,16 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
+      const res = await fetch(`/api/v1/user/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      const data = await res.json();
       // await signOut(auth);
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       dispatch(setLoggedInUser(null));
-      toast.success("Logged out successfully");
+      toast.success(data.message);
       navigate("/login");
       window.location.reload();
     } catch (error) {

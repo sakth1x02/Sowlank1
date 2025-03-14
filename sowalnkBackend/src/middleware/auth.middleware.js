@@ -5,12 +5,12 @@ import { ApiError } from "../utils/apiError.js";
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
   try {
-    let token = req.cookies?.token;
+    let token = await req.cookies?.token;
 
     // Check Authorization header if no cookie token
-    const authHeader = req.header("Authorization");
+    const authHeader = await req.header("Authorization");
     if (!token && authHeader) {
-      token = authHeader.replace("Bearer ", "");
+      token = await authHeader.replace("Bearer ", "");
     }
 
     if (!token) {
@@ -18,7 +18,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     }
     console.log("Token from auth middleware", token);
     try {
-      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
 
       const user = await User.findById(decodedToken?.userId).select(
         "-password"

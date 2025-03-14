@@ -19,14 +19,17 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
+      const token = await localStorage.getItem("token");
+      const res = await fetch(`/api/v1/user/logout`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       dispatch(setLoggedInUser(null));
-      const res = await fetch(`/api/v1/user/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
-      const data = await res.json();
       toast.success(data.message);
       navigate("/login");
       window.location.reload();

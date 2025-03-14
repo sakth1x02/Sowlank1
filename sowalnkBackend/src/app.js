@@ -10,7 +10,6 @@ app.use(
       "https://sakthidev.site",
       "https://3-tier-540623662.us-east-2.elb.amazonaws.com",
     ],
-    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
@@ -19,7 +18,6 @@ app.use(
       "Access-Control-Allow-Credentials",
       "Access-Control-Allow-Origin",
     ],
-    exposedHeaders: ["set-cookie"],
   })
 );
 

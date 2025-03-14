@@ -1,8 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+// Helper function to get the token from localStorage
+const getAuthToken = () => {
+  return localStorage.getItem("token");
+};
+
+// Async actions
 export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
+  const token = getAuthToken();
   const response = await fetch(`/api/v1/user/users`, {
-    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   const res = await response.json();
   return res.data;
@@ -11,14 +20,15 @@ export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
 export const updatePoints = createAsyncThunk(
   "user/updatePoints",
   async ({ userId, completed, taskId }) => {
+    const token = getAuthToken();
     try {
       const response = await fetch(`/api/v1/user/update-points`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ userId, completed, taskId }),
-        credentials: "include",
       });
 
       if (response.ok) {
@@ -30,17 +40,19 @@ export const updatePoints = createAsyncThunk(
     }
   }
 );
+
 export const increaseNormalCoins = createAsyncThunk(
   "user/increaseNormalCoins",
   async ({ userId, taskId }) => {
+    const token = getAuthToken();
     try {
       const response = await fetch(`/api/v1/user/increase-normal-coins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ userId, taskId }),
-        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();
@@ -55,14 +67,15 @@ export const increaseNormalCoins = createAsyncThunk(
 export const increaseGoldCoins = createAsyncThunk(
   "user/increaseGoldCoins",
   async ({ userId, taskId }) => {
+    const token = getAuthToken();
     try {
       const response = await fetch(`/api/v1/user/increase-gold-coins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ userId, taskId }),
-        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();
@@ -73,17 +86,19 @@ export const increaseGoldCoins = createAsyncThunk(
     }
   }
 );
+
 export const increaseEliteCoins = createAsyncThunk(
   "user/increaseEliteCoins",
   async ({ userId, taskId }) => {
+    const token = getAuthToken();
     try {
       const response = await fetch(`/api/v1/user/increase-elite-coins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ userId, taskId }),
-        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();
@@ -98,14 +113,15 @@ export const increaseEliteCoins = createAsyncThunk(
 export const convertNormalCoinsToCoupon = createAsyncThunk(
   "user/convertNormalCoinsToCoupon",
   async ({ userId }) => {
+    const token = getAuthToken();
     try {
       const response = await fetch(`/api/v1/user/convert-normal-coins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ userId }),
-        credentials: "include",
       });
 
       if (response.ok) {
@@ -121,14 +137,15 @@ export const convertNormalCoinsToCoupon = createAsyncThunk(
 export const convertGoldCoinsToCoupon = createAsyncThunk(
   "user/convertGoldCoinsToCoupon",
   async ({ userId }) => {
+    const token = getAuthToken();
     try {
       const response = await fetch(`/api/v1/user/convert-gold-coins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ userId }),
-        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();
@@ -143,14 +160,15 @@ export const convertGoldCoinsToCoupon = createAsyncThunk(
 export const convertEliteCoinsToCoupon = createAsyncThunk(
   "user/convertEliteCoinsToCoupon",
   async ({ userId }) => {
+    const token = getAuthToken();
     try {
       const response = await fetch(`/api/v1/user/convert-elite-coins`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ userId }),
-        credentials: "include",
       });
       if (response.ok) {
         const res = await response.json();
@@ -161,6 +179,8 @@ export const convertEliteCoinsToCoupon = createAsyncThunk(
     }
   }
 );
+
+// Slice
 const userSlice = createSlice({
   name: "user",
   initialState: {

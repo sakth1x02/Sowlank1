@@ -34,7 +34,6 @@ const Subscription = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          credentials: "include",
         });
         const data = await response.json();
         dispatch(setIntermediateMember(false));
@@ -125,7 +124,6 @@ const Subscription = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ planType: planName }),
-        credentials: "include",
       });
 
       const data = await response.json();
@@ -160,7 +158,6 @@ const Subscription = () => {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_signature: response.razorpay_signature,
               }),
-              credentials: "include",
             });
 
             const verifyData = await verifyResponse.json();

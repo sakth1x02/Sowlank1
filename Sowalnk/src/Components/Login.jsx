@@ -36,7 +36,6 @@ const Login = () => {
           email,
           password,
         }),
-        credentials: "include",
       });
 
       const data = await response.json();
@@ -78,7 +77,6 @@ const Login = () => {
           email: user.email,
           name: user.displayName,
         }),
-        credentials: "include",
       });
 
       const data = await response.json();

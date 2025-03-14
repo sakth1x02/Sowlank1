@@ -90,14 +90,17 @@ function DailyTask() {
   };
 
   const handleFileChange = async (taskId, file) => {
+    const token = await localStorage.getItem("token");
     if (!file) return;
     const formData = new FormData();
     formData.append("file", file);
     try {
       const response = await fetch(`/api/v1/task/daily/${taskId}/upload`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
-        credentials: "include",
       });
 
       if (response.ok) {

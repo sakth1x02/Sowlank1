@@ -22,7 +22,6 @@ const ForgotPasswordPage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
-        credentials: "include",
       });
       const resData = await response.json();
       setIsSubmitted(true);

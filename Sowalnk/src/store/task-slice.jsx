@@ -1,19 +1,30 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { calculateProgress } from "../utils/calculateProgress";
 // Async actions
+const getAuthToken = () => {
+  return localStorage.getItem("token");
+};
+
+// Async actions
 export const fetchTasks = createAsyncThunk("task/fetchTasks", async () => {
+  const token = getAuthToken();
   const response = await fetch(`/api/v1/task/daily`, {
-    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   return await response.json();
 });
 
 export const addTask = createAsyncThunk("task/addTask", async (task) => {
+  const token = getAuthToken();
   const response = await fetch(`/api/v1/task/daily`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(task),
-    credentials: "include",
   });
   return await response.json();
 });
@@ -21,9 +32,12 @@ export const addTask = createAsyncThunk("task/addTask", async (task) => {
 export const toggleTaskCompletion = createAsyncThunk(
   "task/toggleTaskCompletion",
   async (taskId) => {
+    const token = getAuthToken();
     const response = await fetch(`/api/v1/task/daily/${taskId}/toggle`, {
       method: "PATCH",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return await response.json();
   }
@@ -32,6 +46,7 @@ export const toggleTaskCompletion = createAsyncThunk(
 export const toggleHasExceededTime = createAsyncThunk(
   "task/toggleHasExceededTime",
   async (taskId) => {
+    const token = getAuthToken();
     try {
       const response = await fetch(
         `${
@@ -39,8 +54,10 @@ export const toggleHasExceededTime = createAsyncThunk(
         }/task/daily/${taskId}/togglehasexceededtime`,
         {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       if (!response.ok) {
@@ -52,17 +69,20 @@ export const toggleHasExceededTime = createAsyncThunk(
     }
   }
 );
+
 export const deleteTask = createAsyncThunk(
   "task/deleteTask",
   async (taskId) => {
+    const token = getAuthToken();
     await fetch(`/api/v1/task/daily/${taskId}/delete`, {
       method: "DELETE",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return taskId;
   }
 );
-
 // Slice
 const taskSlice = createSlice({
   name: "task",

@@ -20,15 +20,15 @@ const generateAccessToken = (userId) => {
 };
 
 // Update cookie options
-const cookieOptions = {
-  httpOnly: true,
-  secure: true,
-  path: "/",
-  sameSite: "none",
-  domain: ".sakthidev.site",
-  maxAge: 24 * 60 * 60 * 1000,
-  partitioned: true,
-};
+// const cookieOptions = {
+//   httpOnly: true,
+//   secure: true,
+//   // path: "/",
+//   sameSite: "none",
+//   // domain: ".sakthidev.site",
+//   maxAge: 24 * 60 * 60 * 1000,
+//   partitioned: true,
+// };
 
 const userAuthentication = {
   signupUser: asyncHandler(async (req, res) => {
@@ -57,7 +57,7 @@ const userAuthentication = {
     if (password !== confirmPassword) {
       return res.status(400).json({
         success: false,
-        message: "Password are not same",
+        message: "Passwords do not match",
       });
     }
 
@@ -67,7 +67,7 @@ const userAuthentication = {
       return res.status(400).json({
         success: false,
         message:
-          "User with this email already exists try google login or forget passowrd",
+          "User with this email already exists. Try Google login or forgot password.",
       });
     }
 
@@ -94,15 +94,15 @@ const userAuthentication = {
     // Step 6: Remove the password from the response
     const createdUser = await User.findById(user._id).select("-password");
 
-    // Set cookie and send response with token
-    res.cookie("token", token, cookieOptions);
+    // Return token in the response body
     res.status(201).json({
       success: true,
       message: "User registered successfully",
       data: createdUser,
-      token,
+      token, // Send the token in the response
     });
   }),
+
   verifyEmail: asyncHandler(async (req, res) => {
     const { verificationCode } = req.body;
     try {
@@ -137,13 +137,13 @@ const userAuthentication = {
       res.status(500).json({ success: false, message: "Server error" });
     }
   }),
-  // Add to userAuthentication object in user.controller.js
+
   googleAuth: asyncHandler(async (req, res) => {
     const { email, name } = req.body;
     if (!email) {
       return res.status(400).json({
         success: false,
-        message: "Email are required for Google authentication.",
+        message: "Email is required for Google authentication.",
       });
     }
 
@@ -169,12 +169,11 @@ const userAuthentication = {
     await sendWelcomeEmail(user.email, user.name);
 
     // Return token and user data
-    res.cookie("token", token, cookieOptions);
     res.status(200).json({
       success: true,
       message: "Google authentication successful",
       data: userData,
-      token,
+      token, // Send the token in the response
     });
   }),
 
@@ -195,7 +194,7 @@ const userAuthentication = {
 
     if (user.isVerified) {
       // Step 4: Compare the provided password with the hashed password
-      const isPasswordValid = bcrypt.compare(password, user.password);
+      const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         throw new ApiError(401, "Invalid credentials");
       }
@@ -208,13 +207,12 @@ const userAuthentication = {
       user.lastLogin = new Date();
       await user.save();
 
-      // Set cookie and send response with token
-      res.cookie("token", token, cookieOptions);
+      // Return token in the response body
       res.status(200).json({
         success: true,
         message: "User logged in successfully",
         data: loggedInUser,
-        token,
+        token, // Send the token in the response
       });
     } else {
       throw new ApiError(401, "Invalid credentials");
@@ -222,13 +220,7 @@ const userAuthentication = {
   }),
 
   logoutUser: asyncHandler(async (req, res) => {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: true,
-      path: "/",
-      sameSite: "none",
-      domain: ".sakthidev.site",
-    });
+    // No need to clear cookies since we're not using them
     res.status(200).json({
       success: true,
       message: "User logged out successfully",

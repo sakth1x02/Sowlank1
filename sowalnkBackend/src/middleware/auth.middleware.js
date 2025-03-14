@@ -5,14 +5,9 @@ import { ApiError } from "../utils/apiError.js";
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
   try {
-    let token = await req.cookies?.token;
-
-    // Check Authorization header if no cookie token
-    const authHeader = await req.header("Authorization");
-    if (!token && authHeader) {
-      token = await authHeader.replace("Bearer ", "");
-    }
-
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(" ")[1];
+    console.log("Token from auth headers", token);
     if (!token) {
       throw new ApiError(401, "Unauthorized request - No token provided");
     }

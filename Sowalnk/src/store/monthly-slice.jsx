@@ -1,11 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { calculateMonthlyProgress } from "../utils/calculateMonthlyProgress.jsx";
 // Async actions
+const getAuthToken = () => {
+  return localStorage.getItem("token");
+};
+
 export const fetchMonthlyTasks = createAsyncThunk(
   "weeklytask/fetchMonthlyTasks",
   async () => {
+    const token = getAuthToken();
     const response = await fetch(`/api/v1/monthlytask/monthly`, {
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return await response.json();
   }
@@ -14,11 +21,14 @@ export const fetchMonthlyTasks = createAsyncThunk(
 export const addMonthlyTask = createAsyncThunk(
   "monthlytask/addMonthlyTask",
   async (task) => {
+    const token = getAuthToken();
     const response = await fetch(`/api/v1/monthlytask/monthly`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(task),
-      credentials: "include",
     });
     return await response.json();
   }
@@ -27,11 +37,14 @@ export const addMonthlyTask = createAsyncThunk(
 export const toggleMonthlyTaskCompletion = createAsyncThunk(
   "monthlytask/toggleMonthlyTaskCompletion",
   async (taskId) => {
+    const token = getAuthToken();
     const response = await fetch(
       `/api/v1/monthlytask/monthly/${taskId}/toggle`,
       {
         method: "PATCH",
-        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     return await response.json();
@@ -41,9 +54,12 @@ export const toggleMonthlyTaskCompletion = createAsyncThunk(
 export const deleteMonthlyTask = createAsyncThunk(
   "monthlytask/deleteMonthlyTask",
   async (taskId) => {
+    const token = getAuthToken();
     await fetch(`/api/v1/monthlytask/monthly/${taskId}/delete`, {
       method: "DELETE",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return taskId;
   }

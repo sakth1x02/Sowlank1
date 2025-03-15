@@ -8,6 +8,7 @@ app.use(
   cors({
     origin: [
       "https://sakthidev.site",
+      "http://localhost:5173",
       "https://3-tier-540623662.us-east-2.elb.amazonaws.com",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
@@ -57,3 +58,5 @@ app.use("/api/v1/yearlytask", yearlyTaskRouter);
 app.use("/api/v1/subscription", subscriptionRouter);
 
 export { app };
+
+// http://localhost:5173

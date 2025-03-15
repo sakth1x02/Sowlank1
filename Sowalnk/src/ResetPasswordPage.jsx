@@ -26,7 +26,6 @@ const ResetPasswordPage = () => {
     try {
       const res = await fetch(`/api/v1/user/reset-password/${token}`, {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

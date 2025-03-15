@@ -1,11 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { calculateMonthlyProgress } from "../utils/calculateMonthlyProgress.jsx";
 // Async actions
+const getAuthToken = () => {
+  return localStorage.getItem("token");
+};
 export const fetchYearlyTasks = createAsyncThunk(
   "yearlytask/fetchYearlyTasks",
   async () => {
+    const token = getAuthToken();
     const response = await fetch(`/api/v1/yearlytask/yearly`, {
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return await response.json();
   }
@@ -14,11 +20,14 @@ export const fetchYearlyTasks = createAsyncThunk(
 export const addYearlyTask = createAsyncThunk(
   "yearlytask/addYearlyTask",
   async (task) => {
+    const token = getAuthToken();
     const response = await fetch(`/api/v1/yearlytask/yearly`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(task),
-      credentials: "include",
     });
     return await response.json();
   }
@@ -27,9 +36,12 @@ export const addYearlyTask = createAsyncThunk(
 export const toggleYearlyTaskCompletion = createAsyncThunk(
   "yearlytask/toggleYearlyTaskCompletion",
   async (taskId) => {
+    const token = getAuthToken();
     const response = await fetch(`/api/v1/yearlytask/yearly/${taskId}/toggle`, {
       method: "PATCH",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return await response.json();
   }
@@ -38,9 +50,12 @@ export const toggleYearlyTaskCompletion = createAsyncThunk(
 export const deleteYearlyTask = createAsyncThunk(
   "yearlytask/deleteYearlyTask",
   async (taskId) => {
+    const token = getAuthToken();
     await fetch(`/api/v1/yearlytask/yearly/${taskId}/delete`, {
       method: "DELETE",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return taskId;
   }

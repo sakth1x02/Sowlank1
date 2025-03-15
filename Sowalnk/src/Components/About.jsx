@@ -5,9 +5,7 @@ const About = () => {
   const [protectedData, setProtectedData] = useState("");
   const handlePublicRoute = async () => {
     try {
-      const res = await fetch("/api/v1/public", {
-        credentials: "include",
-      });
+      const res = await fetch("/api/v1/public");
       const data = await res.json();
       setPublicData(data.data);
     } catch (error) {
@@ -17,8 +15,11 @@ const About = () => {
   };
   const handleProtectedRoute = async () => {
     try {
+      const token = localStorage.getItem("token");
       const res = await fetch("/api/v1/protected", {
-        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       const data = await res.json();
       setProtectedData(data.message);

@@ -49,9 +49,7 @@ export const toggleHasExceededTime = createAsyncThunk(
     const token = getAuthToken();
     try {
       const response = await fetch(
-        `${
-          import.meta.env.VITE_API_URL
-        }/task/daily/${taskId}/togglehasexceededtime`,
+        `/api/v1/task/daily/${taskId}/togglehasexceededtime`,
         {
           method: "PATCH",
           headers: {

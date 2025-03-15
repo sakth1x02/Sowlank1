@@ -1,11 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { calculateWeeklyProgress } from "../utils/calculateWeeklyProgress";
 // Async actions
+const getAuthToken = () => {
+  return localStorage.getItem("token");
+};
+
 export const fetchWeeklyTasks = createAsyncThunk(
   "weeklytask/fetchWeeklyTasks",
   async () => {
+    const token = getAuthToken();
     const response = await fetch(`/api/v1/weeklytask/weekly`, {
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return await response.json();
   }
@@ -14,11 +21,14 @@ export const fetchWeeklyTasks = createAsyncThunk(
 export const addWeeklyTask = createAsyncThunk(
   "weeklytask/addWeeklyTask",
   async (task) => {
+    const token = getAuthToken();
     const response = await fetch(`/api/v1/weeklytask/weekly`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(task),
-      credentials: "include",
     });
     return await response.json();
   }
@@ -27,9 +37,12 @@ export const addWeeklyTask = createAsyncThunk(
 export const toggleWeeklyTaskCompletion = createAsyncThunk(
   "weeklytask/toggleWeeklyTaskCompletion",
   async (taskId) => {
+    const token = getAuthToken();
     const response = await fetch(`/api/v1/weeklytask/weekly/${taskId}/toggle`, {
       method: "PATCH",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return await response.json();
   }
@@ -38,9 +51,12 @@ export const toggleWeeklyTaskCompletion = createAsyncThunk(
 export const deleteWeeklyTask = createAsyncThunk(
   "weeklytask/deleteWeeklyTask",
   async (taskId) => {
+    const token = getAuthToken();
     await fetch(`/api/v1/weeklytask/weekly/${taskId}/delete`, {
       method: "DELETE",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return taskId;
   }

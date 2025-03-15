@@ -13,22 +13,12 @@ import {
   sendResetSuccessEmail,
 } from "../mailtrap/emails.js";
 import crypto from "crypto";
-
+const JWT_SECRET =
+  "/Bg49ZwwW+ofRjU52ymGs/wg6wH5M948Egs18JpxklOsKaQ+oG0Px46S97gI2TL6oDGgnvrtNjDMlwu/SX/pfg==";
 // Helper function to generate access token
 const generateAccessToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1d" });
 };
-
-// Update cookie options
-// const cookieOptions = {
-//   httpOnly: true,
-//   secure: true,
-//   // path: "/",
-//   sameSite: "none",
-//   // domain: ".sakthidev.site",
-//   maxAge: 24 * 60 * 60 * 1000,
-//   partitioned: true,
-// };
 
 const userAuthentication = {
   signupUser: asyncHandler(async (req, res) => {
